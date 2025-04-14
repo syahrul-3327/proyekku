@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pohon Keluarga</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    .node rect {
+      fill: #8BC34A; /* Warna hijau terang untuk kotak anggota keluarga */
+      stroke: #4CAF50; /* Warna hijau gelap untuk garis tepi */
+      stroke-width: 2px;
+      rx: 10; /* Membulatkan sudut */
+      ry: 10;
+    }
+
+    .node text {
+      font-size: 14px;
+      fill: white; /* Warna putih untuk teks */
+      font-family: Arial, sans-serif;
+    }
+
+    .heart {
+      font-size: 16px;
+      fill: red; /* Warna merah untuk simbol hati */
+      font-weight: bold;
+      text-anchor: middle;
+    }
+
+    .link {
+      fill: none;
+      stroke: #ccc;
+      stroke-width: 2px;
+    }
+
+    .controls {
+      margin: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Pohon Keluarga</h1>
+  <div class="controls">
+    <button onclick="renderCoupleTree()" class="btn btn-secondary">Tampilkan Pohon Pasangan</button>
+  </div>
+  <div id="tree-container" style="width: 100%; height: 600px; position: relative;"></div>
+
+  <script>
+    // Ambil data dari localStorage
+    const familyMembers = JSON.parse(localStorage.getItem('familyMembers')) || [
+      { id: 1, name: "Ayah", spouse: 2, children: [] },
+      { id: 2, name: "Ibu", spouse: 1, children: [] }
+    ];
+
+    // Fungsi untuk merender pohon pasangan
+    function renderCoupleTree() {
+      // Bersihkan container sebelumnya
+      document.getElementById('tree-container').innerHTML = '';
+
+      const width = document.getElementById('tree-container').clientWidth;
+      const height = 600;
+
+      const svg = d3.select("#tree-container").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+      const g = svg.append("g").attr("transform", "translate(100, 100)");
+
+      // Filter pasangan dari data
+      const couples = familyMembers.filter(member => member.spouse);
+
+      couples.forEach((member, index) => {
+        const spouse = familyMembers.find(m => m.id === member.spouse);
+
+        if (spouse) {
+          const coupleX = 200 * index; // Jarak antar pasangan
+          const coupleY = 50; // Posisi vertikal
+
+          // Nama pasangan pertama (Ayah)
+          g.append("rect")
+            .attr("x", coupleX - 70)
+            .attr("y", coupleY - 20)
+            .attr("width", 100)
+            .attr("height", 40)
+            .attr("rx", 10)
+            .attr("ry", 10);
+
+          g.append("text")
+            .attr("x", coupleX - 20)
+            .attr("y", coupleY + 5)
+            .attr("class", "node text") // Pastikan mengatur warna teks putih
+            .text(member.name);
+
+          // Nama pasangan kedua (Ibu)
+          g.append("rect")
+            .attr("x", coupleX + 20)
+            .attr("y", coupleY - 20)
+            .attr("width", 100)
+            .attr("height", 40)
+            .attr("rx", 10)
+            .attr("ry", 10);
+
+          g.append("text")
+            .attr("x", coupleX + 70)
+            .attr("y", coupleY + 5)
+            .attr("class", "node text")
+            .text(spouse.name);
+
+          // Simbol cinta di antara pasangan
+          g.append("text")
+            .attr("x", coupleX)
+            .attr("y", coupleY + 10)
+            .attr("class", "heart")
+            .text("❤");
+        }
+      });
+    }
+
+    // Render pohon pasangan secara default
+    renderCoupleTree();
+  </script>
+</body>
+</html>
