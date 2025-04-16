@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silsilah Keluarga Bani Achmad Zabidi</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Silsilah Keluarga Bani Achmad Zabidi</h1>
+    </header>
+
+    <main>
+        <section id="family-info">
+            <h2>Daftar Anggota Keluarga</h2>
+            <button onclick="showAddForm()">Tambah Anggota</button>
+			<!-- Input Pencarian -->
+			<label for="search">Cari Anggota Keluarga:</label>
+			<input type="text" id="search" placeholder="Masukkan nama..." oninput="searchFamilyMembers()">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>Gender</th>
+                        <th>Tanggal Lahir</th>
+                        <th>Usia</th>
+                        <th>Nama Pasangan</th>
+                        <th>Orang Tua</th>
+						<th>Foto</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="family-table">
+                    <!-- Data anggota keluarga akan di-generate disini -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Form Tambah Anggota -->
+<section id="add-member-form" class="hidden">
+    <h2>Tambah Anggota Keluarga</h2>
+    <form id="addForm">
+        <!-- Nama -->
+        <label for="name">Nama:</label>
+        <input type="text" id="name" required>
+        
+        <!-- Gender -->
+        <label for="gender">Gender:</label>
+        <select id="gender">
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+        
+        <!-- Tanggal Lahir -->
+        <label for="birth-date">Tanggal Lahir:</label>
+        <input type="date" id="birth-date" required>
+        
+        <!-- Nama Pasangan -->
+        <label for="spouse">Nama Pasangan:</label>
+        <select id="spouse">
+            <option value="">-- Pilih Nama Pasangan --</option>
+            <!-- Data pasangan akan diisi menggunakan JavaScript -->
+        </select>
+        
+        <!-- Nama Ayah -->
+        <label for="father">Nama Ayah:</label>
+        <select id="father">
+            <option value="">-- Pilih Nama Ayah --</option>
+            <!-- Data ayah akan diisi menggunakan JavaScript -->
+        </select>
+        
+        <!-- Nama Ibu -->
+        <label for="mother">Nama Ibu:</label>
+        <select id="mother">
+            <option value="">-- Pilih Nama Ibu --</option>
+            <!-- Data ibu akan diisi menggunakan JavaScript -->
+        </select>
+        
+        <!-- Insert Foto -->
+        <label for="photo">Foto:</label>
+		<input type="file" id="photo" accept="image/*" onchange="previewPhoto(event)">
+		<img id="photo-preview" src="" alt="Preview Foto" style="display:none; margin-top: 1rem; max-width: 150px; border-radius: 5px;">
+        
+        <!-- Tombol Aksi -->
+        <button type="submit">Simpan</button>
+        <button type="button" onclick="hideAddForm()">Batal</button>
+    </form>
+</section>
+
+        <!-- Statistik Keluarga -->
+        <section id="family-statistics">
+            <h2>Statistik Keluarga</h2>
+            <p>Total Anggota: <span id="total-members">0</span></p>
+            <p>Laki-laki: <span id="total-males">0</span></p>
+            <p>Perempuan: <span id="total-females">0</span></p>
+        </section>
+
+        <!-- Pohon Keluarga -->
+        <section id="family-tree">
+            <h2>Pohon Keluarga</h2>
+            <div id="tree-container">
+                <!-- Pohon keluarga akan digenerate di sini -->
+				
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Silsilah Keluarga Bani Achmad Zabidi</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
